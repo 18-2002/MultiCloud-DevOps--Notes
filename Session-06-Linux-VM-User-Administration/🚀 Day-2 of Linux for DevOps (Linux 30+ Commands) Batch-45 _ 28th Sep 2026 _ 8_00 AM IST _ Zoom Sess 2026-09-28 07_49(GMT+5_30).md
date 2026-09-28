@@ -238,6 +238,692 @@ No significant billing impact for the machine size being used; free credits are 
 
 ---
 
+# 🚀 Day-2 Linux for DevOps — Interview Q&A + Scenario-Based Q&A
+
+**Based on:** Batch-45 Day-2 Linux for DevOps session  
+**Focus:** Linux fundamentals, 30+ commands, GCP VM, SSH key pairs, processes, disk usage, networking and practical troubleshooting.
+
+Source session covered Linux/OS fundamentals, GCP VM creation, SSH keys, Linux commands, process monitoring, disk checks, `grep`, pipes, `curl`, `vi`, and production troubleshooting examples. 
+
+---
+
+# Part 1 — 20 Basic Linux Interview Questions & Answers
+
+## 1. What is Linux?
+
+**Answer:**  
+Linux is technically a **kernel** that connects the operating system software with the hardware. In common usage, people call complete Linux-based systems an operating system. The kernel handles communication between applications and hardware.
+
+---
+
+## 2. What is the difference between Kernel and Shell?
+
+**Answer:**  
+The **kernel** communicates with hardware, while the **shell** provides an interface through which users or applications interact with the operating system.
+
+A simple flow is:
+
+`User/Application → Shell → Kernel → Hardware → Output`
+
+---
+
+## 3. Why is Linux widely used in DevOps?
+
+**Answer:**  
+Linux is popular because it is:
+
+- Free and open source
+- Customizable
+- Performance oriented
+- Widely used for secure and server-side workloads
+
+Most DevOps tools and cloud workloads can be easily operated from Linux systems.
+
+---
+
+## 4. What does the `pwd` command do?
+
+**Answer:**  
+`pwd` means **Print Working Directory**. It shows the current directory where you are working.
+
+```bash
+pwd
+```
+
+Example output:
+
+```text
+/home/ubuntu
+```
+
+---
+
+## 5. What is the difference between `ls` and `pwd`?
+
+**Answer:**  
+
+- `pwd` tells you **where you are**.
+- `ls` tells you **what is inside the current directory**.
+
+```bash
+pwd
+ls
+```
+
+---
+
+## 6. What is the use of `cd`?
+
+**Answer:**  
+`cd` means **Change Directory**. It is used to move from one directory to another.
+
+```bash
+cd /var/log
+```
+
+You can also use:
+
+```bash
+cd ..
+```
+
+to move to the parent directory.
+
+---
+
+## 7. What is the use of `mkdir`?
+
+**Answer:**  
+`mkdir` means **Make Directory**. It creates a new directory.
+
+```bash
+mkdir devops
+```
+
+---
+
+## 8. What is the use of `touch`?
+
+**Answer:**  
+`touch` can create an empty file.
+
+```bash
+touch test.txt
+```
+
+Linux does not require a file extension. The extension is mainly a naming convention used to identify the type of file.
+
+---
+
+## 9. What is the difference between `cp` and `mv`?
+
+**Answer:**  
+
+`cp` copies a file or directory:
+
+```bash
+cp source.txt backup.txt
+```
+
+`mv` moves or renames a file:
+
+```bash
+mv old.txt new.txt
+```
+
+---
+
+## 10. What is the use of `rm`?
+
+**Answer:**  
+`rm` is used to remove/delete files.
+
+```bash
+rm test.txt
+```
+
+You should be careful because deleted files may not be recoverable through a normal Linux command.
+
+---
+
+## 11. What is the difference between `cat` and `more`?
+
+**Answer:**  
+
+- `cat` displays the complete file content at once.
+- `more` displays content page by page, which is useful for larger files.
+
+```bash
+cat application.log
+more application.log
+```
+
+---
+
+## 12. What is the use of `head` and `tail`?
+
+**Answer:**  
+
+`head` shows the beginning of a file:
+
+```bash
+head -10 application.log
+```
+
+`tail` shows the end of a file:
+
+```bash
+tail -10 application.log
+```
+
+In production, `tail` is useful for quickly checking the latest log entries.
+
+---
+
+## 13. What is the use of `ps -aef`?
+
+**Answer:**  
+`ps -aef` displays processes running on the system with detailed information.
+
+```bash
+ps -aef
+```
+
+It is commonly used while troubleshooting running processes.
+
+---
+
+## 14. What is the use of `ps -aef | grep java`?
+
+**Answer:**  
+It filters the process list and displays entries related to Java.
+
+```bash
+ps -aef | grep java
+```
+
+Here:
+
+- `ps -aef` generates process information.
+- `|` sends that output to the next command.
+- `grep java` filters for the word `java`.
+
+---
+
+## 15. What is a pipe `|` in Linux?
+
+**Answer:**  
+A pipe sends the output of one command as the input to another command.
+
+Example:
+
+```bash
+ps -aef | grep java
+```
+
+This is very useful for filtering and chaining Linux commands.
+
+---
+
+## 16. What is the use of `top`?
+
+**Answer:**  
+`top` provides real-time information about running processes and system resources such as CPU, memory, tasks and uptime.
+
+```bash
+top
+```
+
+Press `q` to exit.
+
+---
+
+## 17. What is the use of `free -h`?
+
+**Answer:**  
+`free -h` displays memory usage in a human-readable format.
+
+```bash
+free -h
+```
+
+It helps check available and used RAM.
+
+---
+
+## 18. What is the use of `df -h`?
+
+**Answer:**  
+`df -h` displays disk space usage for mounted filesystems in a human-readable format.
+
+```bash
+df -h
+```
+
+It is one of the first commands you can use when an application is affected by disk-space issues.
+
+---
+
+## 19. What is `ssh-keygen`?
+
+**Answer:**  
+`ssh-keygen` generates an SSH public/private key pair.
+
+```bash
+ssh-keygen
+```
+
+The default files discussed in the session are:
+
+```text
+~/.ssh/id_rsa
+~/.ssh/id_rsa.pub
+```
+
+`id_rsa` is the private key and `id_rsa.pub` is the public key.
+
+---
+
+## 20. Why is a private key never shared?
+
+**Answer:**  
+The private key must remain with the owner. The public key can be shared and configured on the server.
+
+SSH authentication works using the matching public/private key pair. Sharing the private key can allow someone else to authenticate as the key owner.
+
+---
+
+# Part 2 — 20 Scenario-Based Linux Interview Questions & Answers
+
+## Scenario 1: Production server disk is full. What will you do?
+
+**Answer:**
+
+First check disk usage:
+
+```bash
+df -h
+```
+
+Identify which filesystem is full. Then investigate unnecessary files/logs and clean them according to the organization's process.
+
+A simple interview answer:
+
+> "I will first use `df -h` to identify the full partition, then investigate and clean unnecessary files safely."
+
+---
+
+## Scenario 2: Your Java application is running, but you need to verify its process.
+
+**Answer:**
+
+Use:
+
+```bash
+ps -aef | grep java
+```
+
+This filters the process list and helps confirm whether a Java process is running.
+
+---
+
+## Scenario 3: The server is very slow. Which Linux command will you use first to check resources?
+
+**Answer:**
+
+Use:
+
+```bash
+top
+```
+
+It provides real-time information about CPU, memory, processes and system activity.
+
+You can also check memory separately:
+
+```bash
+free -h
+```
+
+---
+
+## Scenario 4: You need to check available RAM on a Linux VM.
+
+**Answer:**
+
+Run:
+
+```bash
+free -h
+```
+
+The `-h` option displays the values in a human-readable format.
+
+---
+
+## Scenario 5: You need to check the current directory before creating a file.
+
+**Answer:**
+
+Run:
+
+```bash
+pwd
+```
+
+Then list the contents:
+
+```bash
+ls
+```
+
+This confirms where you are working and what already exists.
+
+---
+
+## Scenario 6: You need to create a directory called `project`.
+
+**Answer:**
+
+Run:
+
+```bash
+mkdir project
+```
+
+Then verify:
+
+```bash
+ls
+```
+
+---
+
+## Scenario 7: You need to create an empty configuration file.
+
+**Answer:**
+
+Use:
+
+```bash
+touch application.conf
+```
+
+Linux does not require an extension, but an extension can be used as a naming convention.
+
+---
+
+## Scenario 8: You need to rename `old.conf` to `new.conf`.
+
+**Answer:**
+
+Use:
+
+```bash
+mv old.conf new.conf
+```
+
+`mv` can be used for both moving and renaming files.
+
+---
+
+## Scenario 9: You need to make a backup copy of a configuration file.
+
+**Answer:**
+
+Use:
+
+```bash
+cp application.conf application.conf.backup
+```
+
+This creates a copy while keeping the original file.
+
+---
+
+## Scenario 10: A log file is very large and you only want to see its latest entries.
+
+**Answer:**
+
+Use:
+
+```bash
+tail -10 application.log
+```
+
+You can increase the number if needed:
+
+```bash
+tail -100 application.log
+```
+
+This is useful during production troubleshooting because the latest log entries often show the most recent failure.
+
+---
+
+## Scenario 11: You only want to see the first 10 lines of a file.
+
+**Answer:**
+
+Use:
+
+```bash
+head -10 application.log
+```
+
+---
+
+## Scenario 12: You need to read a large file page by page.
+
+**Answer:**
+
+Use:
+
+```bash
+more application.log
+```
+
+This is more convenient than printing the entire file at once.
+
+---
+
+## Scenario 13: You need to search for a running Java process.
+
+**Answer:**
+
+Use:
+
+```bash
+ps -aef | grep java
+```
+
+This demonstrates the use of a Linux pipe and `grep` filtering.
+
+---
+
+## Scenario 14: A developer asks for the server's internal/private IP address.
+
+**Answer:**
+
+Use:
+
+```bash
+hostname -I
+```
+
+This displays the machine's internal IP address.
+
+In the GCP VM context, this can be compared with the internal IP shown in the VM details.
+
+---
+
+## Scenario 15: You need to find the server's public/external IP from the Linux terminal.
+
+**Answer:**
+
+Use:
+
+```bash
+curl ifconfig.me
+```
+
+This queries the external service and returns the machine's public IP.
+
+---
+
+## Scenario 16: You forgot how a Linux command works.
+
+**Answer:**
+
+Use the manual page:
+
+```bash
+man curl
+```
+
+or:
+
+```bash
+man ls
+```
+
+Press `q` to exit the manual page.
+
+---
+
+## Scenario 17: A new engineer needs SSH access to a GCP VM. What should they share?
+
+**Answer:**
+
+The engineer should generate an SSH key pair:
+
+```bash
+ssh-keygen
+```
+
+Then share only the public key:
+
+```bash
+cat ~/.ssh/id_rsa.pub
+```
+
+The private key should remain with the engineer.
+
+The manager/admin can add the public key to the appropriate GCP SSH configuration.
+
+---
+
+## Scenario 18: How would you connect to a Linux VM using a private key?
+
+**Answer:**
+
+Use:
+
+```bash
+ssh -i <private_key> username@IP_address
+```
+
+Example:
+
+```bash
+ssh -i ~/.ssh/id_rsa ubuntu@192.168.1.10
+```
+
+The server checks whether the provided private key matches the configured public key.
+
+---
+
+## Scenario 19: Why are SSH keys useful for Ansible?
+
+**Answer:**
+
+Ansible commonly connects to multiple servers. SSH key-based authentication allows passwordless authentication, which is much more suitable for automation than manually entering passwords for every server.
+
+Example:
+
+```text
+Ansible Controller
+       |
+       +---- SSH ----> VM1
+       |
+       +---- SSH ----> VM2
+       |
+       +---- SSH ----> VM3
+```
+
+The public key can be configured on the target servers while the private key remains protected on the controller.
+
+---
+
+## Scenario 20: Your company does not allow GUI access to create cloud VMs. How can you create a GCP VM?
+
+**Answer:**
+
+Use the GCP CLI from Cloud Shell.
+
+The session demonstrated creating a VM through the GCP GUI first and then using **Equivalent Code** to obtain the CLI command.
+
+The CLI approach is useful because the command can be saved, modified and reused to create additional VMs.
+
+---
+
+# Quick Interview Revision
+
+## Commands to Remember
+
+| Command | Purpose |
+|---|---|
+| `pwd` | Show current directory |
+| `ls` | List files/directories |
+| `cd` | Change directory |
+| `mkdir` | Create directory |
+| `touch` | Create empty file |
+| `cat` | Display file content |
+| `more` | Read file page by page |
+| `vi` | Edit file |
+| `cp` | Copy file |
+| `mv` | Move/rename file |
+| `rm` | Delete file |
+| `locate` | Search for files |
+| `hostname` | Show machine name |
+| `hostname -I` | Show internal IP |
+| `uname` | Show OS type |
+| `uname -a` | Show detailed system information |
+| `whoami` | Show current user |
+| `history` | Show command history |
+| `ps` | Show processes |
+| `ps -aef` | Show detailed processes |
+| `grep` | Search/filter text |
+| `top` | Real-time process/resource monitoring |
+| `free -h` | Show memory usage |
+| `df -h` | Show disk usage |
+| `head` | Show beginning of file |
+| `tail` | Show end of file |
+| `curl` | Access URLs / transfer data |
+| `man` | Command manual |
+| `ssh-keygen` | Generate SSH key pair |
+| `ssh -i` | SSH using private key |
+
+---
+
+# ⭐ Interview Tip
+
+Don't only say the command. Explain **why you are using it**.
+
+For example, instead of saying:
+
+> "`df -h` checks disk."
+
+Say:
+
+> "If an application is slow or stops because of a possible storage issue, I first use `df -h` to identify which filesystem is full. Then I investigate the files and clean unnecessary data safely."
+
+This makes the answer more practical and interview-ready.
+
+
+
+
+
 ## Action Items & Follow-Ups
 
 - **All students:** Run all commands shared in the GitHub repo (Day 2 of Linux commands posted by instructor); execute and confirm with "D" in chat 
