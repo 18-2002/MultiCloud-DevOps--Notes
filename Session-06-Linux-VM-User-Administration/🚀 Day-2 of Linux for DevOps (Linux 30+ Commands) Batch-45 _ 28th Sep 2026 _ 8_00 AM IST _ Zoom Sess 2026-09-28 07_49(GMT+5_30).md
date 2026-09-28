@@ -80,6 +80,219 @@ Day 2 of the Linux administration module (Batch 45) covered approximately 30–4
 - System checks: does the private key match the public key already on the server? If yes → access granted 
 - **Analogy used:** Lock (public key) and key (private key) — only the correct key opens the correct lock; or: tala (lock) and chaabi (key) — when combined, they open 
 
+# 🔐 Public Key vs Private Key
+
+Public Key and Private Key are a pair of keys used in **Asymmetric Cryptography**.
+
+They are widely used in **SSH, AWS EC2, GitHub, HTTPS/TLS, digital signatures, and secure authentication**.
+
+---
+
+## 📊 Public Key vs Private Key
+
+| # | Public Key 🔓                                                       | Private Key 🔐                                                               |
+| - | ------------------------------------------------------------------- | ---------------------------------------------------------------------------- |
+| 1 | Can be shared with anyone.                                          | Must always be kept secret.                                                  |
+| 2 | Used to encrypt data or verify a digital signature.                 | Used to decrypt data or create a digital signature.                          |
+| 3 | Stored or shared with the system/server that needs to identify you. | Stored securely on your own computer or secure system.                       |
+| 4 | Knowing the public key does not reveal the private key.             | If the private key is compromised, an attacker may gain unauthorized access. |
+| 5 | In SSH, it is stored on the server.                                 | In SSH, it remains on the client machine.                                    |
+
+---
+
+# 🚀 Real-Time Use Case: SSH Authentication
+
+One of the most common examples for DevOps engineers is **connecting to a Linux server using SSH**.
+
+For example:
+
+```text
+Your Laptop  ──────────── SSH ────────────>  Linux Server
+```
+
+Instead of entering a password every time, SSH can authenticate you using a **Public Key + Private Key** pair.
+
+---
+
+## Step 1: Generate the Key Pair
+
+Run this command on your local machine:
+
+```bash
+ssh-keygen -t ed25519
+```
+
+This generates two files:
+
+```text
+~/.ssh/id_ed25519
+        ↓
+Private Key
+
+~/.ssh/id_ed25519.pub
+        ↓
+Public Key
+```
+
+---
+
+## Step 2: Public Key Goes to the Server
+
+Copy the public key to the Linux server:
+
+```bash
+ssh-copy-id user@server-ip
+```
+
+The public key is stored on the server inside:
+
+```text
+~/.ssh/authorized_keys
+```
+
+So the setup looks like:
+
+```text
+YOUR LAPTOP                         LINUX SERVER
+-----------                         ------------
+
+Private Key                         Public Key
+id_ed25519                          authorized_keys
+    │                                    │
+    │                                    │
+    └────────── SSH Authentication ──────┘
+```
+
+---
+
+## Step 3: Private Key Stays With You
+
+Your private key remains on your computer:
+
+```text
+~/.ssh/id_ed25519
+```
+
+**Never share this file.**
+
+Do not:
+
+```text
+❌ Upload it to GitHub
+❌ Send it to another person
+❌ Put it inside source code
+❌ Share it in WhatsApp/Telegram
+❌ Commit it to a Git repository
+```
+
+---
+
+## Step 4: Connect to the Server
+
+Now you can connect using:
+
+```bash
+ssh user@server-ip
+```
+
+Example:
+
+```bash
+ssh ubuntu@192.168.1.100
+```
+
+SSH verifies that your machine has the **Private Key** corresponding to the **Public Key** stored on the server.
+
+If authentication succeeds:
+
+```text
+SSH Authentication
+        ↓
+       ✅
+        ↓
+Linux Server Access
+```
+
+---
+
+
+# ☁️ Real-Time DevOps Example: AWS EC2
+
+Suppose you create an **AWS EC2 Linux instance**.
+
+You may receive a private key such as:
+
+```text
+my-server.pem
+```
+
+You can use it to connect:
+
+```bash
+ssh -i my-server.pem ubuntu@<EC2-PUBLIC-IP>
+```
+
+Example:
+
+```bash
+ssh -i my-server.pem ubuntu@54.123.45.67
+```
+
+
+
+
+# 🧠 Easy Way to Remember
+
+Think of a **public key as a lock** and the **private key as the secret key**.
+
+```text
+PUBLIC KEY 🔓
+     ↓
+Can be shared
+
+PRIVATE KEY 🔐
+     ↓
+Must be protected
+```
+
+### Golden Rule
+
+> **Public Key → Share it**
+>
+> **Private Key → Protect it**
+
+---
+
+
+# 🎯 Interview Question
+
+### Q: What is the difference between a Public Key and a Private Key?
+
+**Answer:**
+
+A **Public Key** can be shared publicly and is used for encryption or signature verification.
+
+A **Private Key** must be kept secret and is used for decryption or creating digital signatures.
+
+In **SSH authentication**, the public key is stored on the server, while the private key remains securely on the client machine.
+
+---
+
+# ⚡ Quick Revision
+
+| Feature             | Public Key 🔓          | Private Key 🔐   |
+| ------------------- | ---------------------- | ---------------- |
+| Can be shared?      | ✅ Yes                  | ❌ No             |
+| Must remain secret? | ❌ No                   | ✅ Yes            |
+| SSH location        | Server                 | Client           |
+| Encryption          | Encrypt                | Decrypt          |
+| Digital Signature   | Verify                 | Create           |
+| AWS EC2             | Public key on instance | `.pem` on client |
+| GitHub SSH          | Registered public key  | Stored locally   |
+
+---
+
+
 ### Interview Questions Covered
 
 - **Can the same key pair be used across companies?**
