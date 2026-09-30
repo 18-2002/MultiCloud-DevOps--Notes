@@ -153,7 +153,7 @@ echo "Session: S06 — Linux VM & User Administration"
 
 > **Question:** Explain **Top 40+ Linux Commands — practical usage** with a real-world DevOps example.
 
-**Answer:**
+Answer:
 
 Top 40+ Linux Commands — practical usage is a core concept in **Linux VM & User Administration** under Module 2: Linux Administration for DevOps + GCP.
 
