@@ -21,7 +21,7 @@ In Linux, everything starts from the root directory (`/`), which functions simil
     cat /etc/os-release
     ```
 - **`/bin` (Binary Executables)**:
-  - Contains essential compiled binary executable programs and commands ready to run directly without compilation.
+  - Contains essential compiled binary executable programs and commands ready to run directly without compilation, not need to be execute.
 - **`/root` vs `/home`**:
   - **`/root`**: The dedicated home directory for the administrative `root` user.
   - **`/home/<username>`**: The dedicated home directories for non-root, regular users (e.g., `/home/vikas`).
