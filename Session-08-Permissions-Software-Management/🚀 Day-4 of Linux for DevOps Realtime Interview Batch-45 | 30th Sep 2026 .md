@@ -53,7 +53,7 @@ su <username>
 - **64-bit Architecture (`x86_64`)**: The standard for current cloud virtual machines, operating systems, and enterprise software.
 - Check system architecture:
   ```bash
-  uname -m
+  uname -m or uname -i
   ```
 
 ---
