@@ -22,6 +22,7 @@ In Linux, everything starts from the root directory (`/`), which functions simil
     ```
 - **`/bin` (Binary Executables)**:
   - Contains essential compiled binary executable programs and commands ready to run directly without compilation.
+  - that is not required to execute
 - **`/root` vs `/home`**:
   - **`/root`**: The dedicated home directory for the administrative `root` user.
   - **`/home/<username>`**: The dedicated home directories for non-root, regular users (e.g., `/home/vikas`).
