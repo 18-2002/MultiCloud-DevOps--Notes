@@ -1,4 +1,4 @@
-# Linux Day 4 - Session Summary
+vi# Linux Day 4 - Session Summary
 
 A comprehensive, student-friendly reference guide based on the Day 4 Linux & Cloud Administration session.
 
@@ -61,6 +61,7 @@ su <username>
 ## 2. Vi / Vim Text Editor Fundamentals
 
 The `vi` (or `vim`) text editor is the universal, built-in command-line text editor available across all Linux distributions.
+To Exit the vm text editor press :q! 
 
 ### 2.1 The Two Primary Modes
 1. **Command Mode (Default)**:
